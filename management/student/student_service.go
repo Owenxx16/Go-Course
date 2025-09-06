@@ -35,7 +35,18 @@ func addStudent() {
 	students = append(students, student)
 	fmt.Println("Them sinh vien thanh cong!")
 }
-func deleteStudent() {}
+func deleteStudent() {
+	fmt.Println("==========XOA SINH VIEN==========")
+	id := utils.GetPositiveInt("Nhap ID sinh vien can xoa: ")
+	for i, student := range students {
+		if student.Id == id {
+			students = append(students[:i], students[i+1:]...)
+			fmt.Println("Xoa sinh vien thanh cong!")
+			return
+		}
+	}
+	fmt.Println("Khong tim thay sinh vien voi ID da cho.")
+}
 func updateStudent() {
 	id := utils.GetPositiveInt("Nhap ID sinh vien can sua: ")
 	for _, student := range students {
@@ -54,10 +65,13 @@ func updateStudent() {
 				Id:    student.Id,
 				Name:  name,
 				Class: class,
+				Score: newScore,
 			}
 			fmt.Println("Sua thong tin sinh vien thanh cong!")
+			return
 		}
 	}
+	fmt.Println("Khong tim thay sinh vien voi ID da cho.")
 }
 func listStudents() {
 	fmt.Println("==========DANH SACH SINH VIEN==========")
@@ -69,7 +83,17 @@ func listStudents() {
 		fmt.Printf("ID: %d \n Ten: %s \n Lop: %s \n Diem: %v\n", student.Id, student.Name, student.Class, student.Score)
 	}
 }
-func searchStudent() {}
+func searchStudent() {
+	fmt.Println("==========TIM KIEM SINH VIEN==========")
+	id := utils.GetPositiveInt("Nhap ID sinh vien can tim: ")
+	for _, s := range students {
+		if s.Id == id {
+			fmt.Println("Da tim thay sinh vien:", s.getInfo())
+			return
+		}
+	}
+	fmt.Println("Khong tim thay sinh vien voi ID da cho.")
+}
 func StudentMenu() {
 	for {
 		utils.ClearScreen()

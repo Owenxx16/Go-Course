@@ -33,8 +33,42 @@ func addTeacher() {
 	teachers = append(teachers, teacher)
 	fmt.Println("Them giang vien thanh cong!")
 }
-func deleteTeacher() {}
-func updateTeacher() {}
+func deleteTeacher() {
+	fmt.Println("==========XOA SINH VIEN==========")
+	id := utils.GetPositiveInt("Nhap ID sinh vien can xoa: ")
+	for i, teacher := range teachers {
+		if teacher.Id == id {
+			teachers = append(teachers[:i], teachers[i+1:]...)
+			fmt.Println("Xoa sinh vien thanh cong!")
+			return
+		}
+	}
+	fmt.Println("Khong tim thay sinh vien voi ID da cho.")
+}
+func updateTeacher() {
+	id := utils.GetPositiveInt("Nhap ID giang vien can sua: ")
+	for _, teacher := range teachers {
+		if teacher.Id == id {
+			fmt.Println("Nhap thong tin moi (de trong neu khong muon thay doi):")
+			name := utils.GetOptionalString("Nhap ten giang vien: ", teacher.Name)
+			subject := utils.GetOptionalString("Nhap mon day cua giang vien: ", teacher.Subject)
+			baseSalary := utils.GetOptionalPositiveFloat("Nhap luong khoi diem cua giang vien: ", teacher.BaseSalary)
+			bonus := utils.GetOptionalPositiveFloat("Nhap so tien thuong cua giang vien: ", teacher.Bonus)
+
+			teacher := Teacher{
+				Id:         id,
+				Name:       name,
+				Subject:    subject,
+				BaseSalary: baseSalary,
+				Bonus:      bonus,
+			}
+
+			fmt.Println("Sua thong tin giang vien thanh cong!")
+			return
+		}
+	}
+	fmt.Println("Khong tim thay giang vien voi ID da cho.")
+}
 func listTeachers() {
 	fmt.Println("==========DANH SACH GIANG VIEN==========")
 	if len(teachers) == 0 {
@@ -45,7 +79,17 @@ func listTeachers() {
 		fmt.Printf("ID: %d \n Ten: %s \n Lop: %s \n Diem: %v\n", teacher.Id, teacher.Name, teacher.Subject, teacher.BaseSalary, teacher.Bonus)
 	}
 }
-func searchTeacher() {}
+func searchTeacher() {
+	fmt.Println("==========TIM KIEM GIANG VIEN==========")
+	id := utils.GetPositiveInt("Nhap ID giang vien can tim: ")
+	for _, teacher := range teachers {
+		if teacher.Id == id {
+			fmt.Println("Da tim thay giang vien:", teacher.GetInfo())
+			return
+		}
+	}
+	fmt.Println("Khong tim thay giang vien voi ID da cho.")
+}
 func TeacherMenu() {
 	for {
 		utils.ClearScreen()
