@@ -8,7 +8,7 @@ func countDistinctWords(messages []string) int {
 	for _, message := range messages {
 		words := strings.Split(message, " ")
 		for _, word := range words {
-			normalized = strings.ToLower(word)
+			normalized := strings.ToLower(word)
 			wordSet[normalized] = struct{}{}
 		}
 	}
